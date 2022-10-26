@@ -1,0 +1,73 @@
+from tkinter import *
+from tkinter import messagebox
+import csv
+
+master = Tk()
+master.geometry("700x700")
+master.resizable(0, 0)
+master.title("Login Page")
+
+icon = PhotoImage(file="image1.png")
+logo = Label(master, image=icon)
+logo.pack()
+
+separator = Frame(height=2)
+separator.pack(fill=X, padx=5, pady=20)
+
+login_label = Label(master, text="Welcome to SRA Railways", fg="black", font=("Times New Roman", 38, "bold"))
+login_label.pack(padx=20, ipady=10)
+
+separator = Frame(height=2)
+separator.pack(fill=X, padx=5, pady=20)
+
+login_label = Label(master, text="User Login", fg="black", font=("Times New Roman", 20, "underline bold"))
+login_label.pack(padx=20, ipady=10)
+
+Uname = StringVar()
+pwd = StringVar()
+
+def signup():
+    master.destroy()
+    import register
+    return
+
+def login():
+    username = Uname.get()
+    password = pwd.get()
+
+    csv_file = csv.reader(open("Add user.csv", 'r'))
+    for row in csv_file:
+        if username == row[0] and password == row[3]:
+            messagebox.showinfo('Information', 'Login Success')
+            master.destroy()
+            import window2
+
+    if username =="" or password == "":
+        messagebox.showerror("ALERT", "Fill all fields")
+    else:
+        messagebox.showerror("ALERT", "Invalid Username or Password")
+
+    return
+
+
+num_label = Label(master, text='Username:', width=20, font=('bold', 17))
+num_label.place(x=30, y=400)
+
+num_entry = Entry(master, width=20, textvar=Uname, font=('bold', 17))
+num_entry.place(x=250, y=400)
+
+pwd_label = Label(master, text='Password:', width=20, font=('bold', 17))
+pwd_label.place(x=52, y=450)
+
+pwd_entry = Entry(master, width=20, textvar=pwd, font=('bold', 17), show="*")
+pwd_entry.place(x=250, y=450)
+
+login_btn = Button(master, text="Sign In", font=('bold', 15), fg='white', bg='green', cursor="hand2",
+                   command=login, width=23)
+login_btn.place(x=250, y=490)
+
+Signuplbl=Button(master,text="New Here? Create an Account.",width=36,fg="black",font=('corbel',10,'bold underline'),command=signup)
+Signuplbl.place(x=250,y=550)
+master.mainloop()
+
+
